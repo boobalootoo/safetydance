@@ -40,6 +40,7 @@
             top: 0;
             left: 0;
             width: 100%;
+            z-index: 15;
         }
         #top-bar div {
             background-color: transparent;
@@ -81,6 +82,57 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+        .notification {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ffffff;
+            color: #1e293b;
+            padding: 8px 12px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0;
+            z-index: 20;
+            animation: slideInTop 0.5s ease-out, fadeOut 5s 2s ease-in forwards;
+            width: 100%;
+            max-width: 100%;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+        .notification-text {
+            font-size: 0.8rem;
+            color: #4b5563;
+        }
+        .notification-sender {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            margin-bottom: 2px;
+        }
+        @keyframes slideInTop {
+            from {
+                transform: translateX(-50%) translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -189,48 +241,21 @@
                     </a>
                 </div>
             </div>
+             <div class="notification">
+                <div class="notification-sender">Post Office</div>
+                <div class="notification-title">Your parcel has been returned</div>
+                <p class="notification-text">To schedule your redelivery, please visit: <a href="https://po-support-depot.com">https://po-support-depot.com</a></p>
+            </div>
         </div>
     </div>
     <script>
         const appGrid = document.getElementById('app-grid');
-        const passwordMap = new Map();
-        let lockScreenPassword = null; // To store the lock screen password
-        const isPasswordEnabled = false; // You can use this to enable/disable password protection
-
-        function getRandomPassword() {
-            const passwordLength = Math.floor(Math.random() * 10) + 6;
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+={}[]|;:<>,.?/~';
-            let password = '';
-            for (let i = 0; i < passwordLength; i++) {
-                password += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            return password;
-        }
-
-        // Function to handle password check
-        function checkPassword(appName, enteredPassword) {
-            if (appName === 'lockScreen') {
-                if (enteredPassword === lockScreenPassword) {
-                    return true; // Correct lock screen password
-                }
-                return false;
-            } else if (passwordMap.has(appName)) {
-                if (enteredPassword === passwordMap.get(appName)) {
-                    return true;
-                }
-                return false;
-            }
-            return true; //no password set
-        }
 
         appGrid.addEventListener('click', (event) => {
             let targetApp = event.target.closest('.app-icon');
             if (targetApp) {
                 const appName = targetApp.dataset.app;
-                const passwordRequired = targetApp.dataset.passwordRequired === "true";
-
                 window.location.href = `${appName}.html`; // Navigate to the app
-
             }
         });
     </script>
