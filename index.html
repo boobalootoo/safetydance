@@ -106,7 +106,7 @@
             25% { -webkit-transform: translateX(-5px); }
             50% { -webkit-transform: translateX(5px); }
             75% { -webkit-transform: translateX(-5px); }
-            100% { transform: translateX(0); }
+            100% { -webkit-transform: translateX(0); }
         }
         .grid-container {
             display: grid;
@@ -151,50 +151,6 @@
         </div>
     </div>
     <script>
-        // battery.js
-        let batteryLevel = 100;
-        const batteryDisplayElement = document.getElementById('battery-level');
-
-        function updateBatteryDisplay() {
-            batteryDisplayElement.textContent = `${batteryLevel}`;
-        }
-
-        function drainBattery() {
-            if (batteryLevel > 0) {
-                batteryLevel -= 10;
-                updateBatteryDisplay();
-            }
-        }
-
-        function getBatteryLevel() {
-            return batteryLevel;
-        }
-
-        // password.js
-        const usedPasswords = new Map();
-        let appName = "lockScreen"; // You can change this as needed.
-
-        function isPasswordReused(password) {
-            return usedPasswords.has(password);
-        }
-
-        function addUsedPassword(password) {
-            if (!usedPasswords.has(password)) {
-                usedPasswords.set(password, [appName]); // Store the app name
-            } else {
-                 let apps = usedPasswords.get(password);
-                 if(!apps.includes(appName)){
-                    apps.push(appName);
-                 }
-                 usedPasswords.set(password,apps)
-            }
-        }
-
-       function getUsedPasswords() {
-            return usedPasswords;
-        }
-
-        // main.js
         const timeDisplay = document.getElementById('time-display');
         const dateDisplay = document.getElementById('date-display');
         const pinDisplay = document.getElementById('pin-display');
@@ -203,15 +159,14 @@
         const messageDisplay = document.getElementById('message-display');
         const lockScreen = document.getElementById('lock-screen');
         const phoneContainer = document.getElementById('phone-container');
-
         let enteredPin = '';
         const correctPin = '1234';
         let incorrectAttempts = 0;
         const maxAttempts = 5;
-        let batteryLevel = getBatteryLevel(); // Get initial battery level
-        const usedPasswordsData = getUsedPasswords();
-
-        updateBatteryDisplay(); // Initial display
+        let batteryLevel = 100;
+        const batteryDisplay = document.getElementById('battery-level');
+        // Store used passwords
+        const usedPasswords = new Set();
 
         function updateTimeAndDate() {
             const now = new Date();
@@ -220,21 +175,26 @@
             timeDisplay.textContent = time;
             dateDisplay.textContent = date;
         }
-
         updateTimeAndDate();
         setInterval(updateTimeAndDate, 1000);
-
         function handlePinInput(pin) {
             enteredPin += pin;
             pinDisplay.textContent = '*'.repeat(enteredPin.length);
         }
-
         function handleDelete() {
             enteredPin = enteredPin.slice(0, -1);
             pinDisplay.textContent = '*'.repeat(enteredPin.length);
         }
+        function updateBatteryDisplay() {
+            batteryDisplay.textContent = `${batteryLevel}`;
+        }
 
-
+        function drainBattery() {
+            if (batteryLevel > 0) {
+                batteryLevel -= 10;
+                updateBatteryDisplay();
+            }
+        }
 
         function unlockPhone() {
             if (enteredPin === correctPin) {
@@ -245,13 +205,13 @@
                 phoneContainer.removeChild(lockScreen);
                 window.location.href = "https://boobalootoo.github.io/safetydance/home.html";
                 // Check for password reuse
-                if (isPasswordReused(enteredPin)) {
+                if (usedPasswords.has(enteredPin)) {
                     drainBattery();
                     messageDisplay.textContent += "  Password reused! Battery draining!";
-                } else {
-                    addUsedPassword(enteredPin);
                 }
-                 console.log("Used Passwords:", usedPasswordsData);
+                else{
+                    usedPasswords.add(enteredPin);
+                }
             } else {
                 incorrectAttempts++;
                 messageDisplay.textContent = `Incorrect PIN. Attempts remaining: ${maxAttempts - incorrectAttempts}`;
@@ -269,7 +229,6 @@
                 }
             }
         }
-
         pinButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const pin = button.dataset.pin;
@@ -279,7 +238,6 @@
                 }
             });
         });
-
         deleteButton.addEventListener('click', handleDelete);
     </script>
 </body>
