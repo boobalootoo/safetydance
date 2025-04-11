@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .bank-container {
+            background-color: #fff;
+            border-radius: 26px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 375px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        #password-display {
+            font-size: 2rem;
+            letter-spacing: 0.5rem;
+            margin-bottom: 20px;
+            color: #222;
+        }
+        .pin-button {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .pin-button:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.05);
+        }
+        .pin-button:active {
+            background-color: #d0d0d0;
+            transform: scale(0.95);
+        }
+        #delete-button {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        #delete-button:hover {
+            background-color: #f44336;
+            transform: scale(1.05);
+        }
+        #delete-button:active {
+            background-color: #d32f2f;
+            transform: scale(0.95);
+        }
+        #message-display {
+            margin-top: 20px;
+            color: #333;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="bank-container">
+        <h1 class="text-2xl font-semibold mb-6 text-blue-600">Welcome to Bank App</h1>
+        <div id="password-display" class="mb-6"></div>
+        <div class="grid grid-cols-3 gap-4">
+            <button class="pin-button bg-gray-200 text-gray-800" data-pin="1">1</button>
+            <button class="pin-button bg-gray-200 text-gray-800" data-pin="2">2</button>
+            <button class="pin-button bg-gray-200 text-gray-800" data-pin="3">3</button>
+            <button class="pin-button bg-gray-200 text-gray-800" data-pin="4">4</button>
+            <button class="pin-button bg-gray-200 text-gray-800" data-pin="5">5</button>
+            <button class="pin-button bg-gray-200 text-gray-800" data-pin="6">6</button>
+            <button class="pin-button bg-gray-200 text-gray-800" data-pin="7">7</button>
+            <button class="pin-button bg-gray-200 text-gray-800" data-pin="8">8</button>
+            <button class="pin-button bg-gray-200 text-gray-800" data-pin="9">9</button>
+            <div></div>
+            <button class="pin-button bg-gray-200 text-gray-800" data-pin="0">0</button>
+            <button id="delete-button" class="text-red-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-delete-back"><path d="M3 9h13c.6 0 1 .4 1 1v8c0 .6-.4 1-1 1H3c-.6 0-1-.4-1-1v-8c0-.6.4-1 1-1Z"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M3 15h18"/></svg>
+            </button>
+        </div>
+        <div id="message-display" class="mt-6 text-gray-600">Enter Password</div>
+    </div>
+    <script>
+        const passwordDisplay = document.getElementById('password-display');
+        const pinButtons = document.querySelectorAll('.pin-button');
+        const deleteButton = document.getElementById('delete-button');
+        const messageDisplay = document.getElementById('message-display');
+
+        let enteredPassword = '';
+        const correctPassword = '1234'; // In a real app, this should be handled securely.
+
+        function handlePinInput(pin) {
+            enteredPassword += pin;
+            passwordDisplay.textContent = '*'.repeat(enteredPassword.length);
+        }
+
+        function handleDelete() {
+            enteredPassword = enteredPassword.slice(0, -1);
+            passwordDisplay.textContent = '*'.repeat(enteredPassword.length);
+        }
+
+        function authenticate() {
+            if (enteredPassword === correctPassword) {
+                messageDisplay.textContent = 'Login successful! Redirecting...';
+                //  Replace this with actual navigation to the main bank interface.
+                setTimeout(() => {
+                    window.location.href = 'bank_main.html'; //  Placeholder:  Redirect to a main page.
+                }, 2000);
+            } else {
+                messageDisplay.textContent = 'Incorrect password. Please try again.';
+                passwordDisplay.textContent = '';
+                enteredPassword = '';
+            }
+        }
+
+        pinButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const pin = button.dataset.pin;
+                handlePinInput(pin);
+                if (enteredPassword.length === correctPassword.length) {
+                    authenticate();
+                }
+            });
+        });
+
+        deleteButton.addEventListener('click', handleDelete);
+    </script>
+</body>
+</html>
