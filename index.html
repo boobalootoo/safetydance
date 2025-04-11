@@ -156,7 +156,7 @@
         function updateTimeAndDate() {
             const now = new Date();
             const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-            const date = now.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const date = now.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: numeric' });
             timeDisplay.textContent = time;
             dateDisplay.textContent = date;
         }
@@ -183,51 +183,9 @@
                 //  Instead of hiding lock screen, remove it from phone container
                 phoneContainer.removeChild(lockScreen);
 
-                // Create and append the home screen.
-                const homeScreenDiv = document.createElement('div');
-                homeScreenDiv.id = 'home-screen';
-                homeScreenDiv.innerHTML = `
-                    <div id="top-bar">
-                        <div>\${timeDisplay.textContent}</div>
-                        <div>Battery: 90%</div>
-                    </div>
-                    <div id="app-grid">
-                        <div class="app-icon">
-                            <img src="https://via.placeholder.com/40" alt="Phone">
-                            <div>Phone</div>
-                        </div>
-                        <div class="app-icon">
-                            <img src="https://via.placeholder.com/40" alt="Messages">
-                            <div>Messages</div>
-                        </div>
-                        <div class="app-icon">
-                            <img src="https://via.placeholder.com/40" alt="Calendar">
-                            <div>Calendar</div>
-                        </div>
-                        <div class="app-icon">
-                            <img src="https://via.placeholder.com/40" alt="Camera">
-                            <div>Camera</div>
-                        </div>
-                        <div class="app-icon">
-                            <img src="https://via.placeholder.com/40" alt="Photos">
-                            <div>Photos</div>
-                        </div>
-                        <div class="app-icon">
-                            <img src="https://via.placeholder.com/40" alt="Settings">
-                            <div>Settings</div>
-                        </div>
-                         <div class="app-icon">
-                            <img src="https://via.placeholder.com/40" alt="Music">
-                            <div>Music</div>
-                        </div>
-                        <div class="app-icon">
-                            <img src="https://via.placeholder.com/40" alt="Browser">
-                            <div>Browser</div>
-                        </div>
-                    </div>
-                `;
-                phoneContainer.appendChild(homeScreenDiv);
-                enteredPin = '';
+                // Open home.html
+                window.location.href = "home.html";
+
 
             } else {
                 incorrectAttempts++;
