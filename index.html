@@ -112,8 +112,14 @@
             display: grid;
             grid-template-columns: repeat(3, 70px);
             gap: 10px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
+            justify-content: center;
+        }
+        #message-display {
+            margin-top: 30px;
+            text-gray-600;
+            text-align: center;
+            grid-column: 1 / 2; /* Position in the first column */
         }
         #battery-display {
             position: absolute;
@@ -140,13 +146,12 @@
                 <button class="pin-button" data-pin="7">7</button>
                 <button class="pin-button" data-pin="8">8</button>
                 <button class="pin-button" data-pin="9">9</button>
-                <div></div>
+                <div id="message-display" class="mt-6 text-gray-600 text-center">Enter PIN</div>
                 <button class="pin-button" data-pin="0">0</button>
                 <button id="delete-button" class="text-red-500">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-delete-back"><path d="M3 9h13c.6 0 1 .4 1 1v8c0 .6-.4 1-1 1H3c-.6 0-1-.4-1-1v-8c0-.6.4-1 1-1Z"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M3 15h18"/></svg>
                 </button>
             </div>
-            <div id="message-display" class="mt-6 text-gray-600 text-center">Enter PIN</div>
             <div id="battery-display">Battery: <span id="battery-level">100</span>%</div>
         </div>
     </div>
@@ -207,7 +212,7 @@
                 // Check for password reuse
                 if (usedPasswords.has(enteredPin)) {
                     drainBattery();
-                    messageDisplay.textContent += "  Password reused! Battery draining!";
+                    messageDisplay.textContent += "  Password reused! Battery draining!";
                 }
                 else{
                     usedPasswords.add(enteredPin);
