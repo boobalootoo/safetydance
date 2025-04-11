@@ -196,9 +196,10 @@
         }
 
         #home-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
+            position: fixed; /* Changed to fixed */
+            bottom: 20px;
+            left: 50%;  /* Center horizontally */
+            transform: translateX(-50%); /* Precise centering */
             width: 32px;
             height: 32px;
             background-image: url('https://cdn-icons-png.flaticon.com/128/263/263115.png');
@@ -407,6 +408,10 @@
             } else {
                 showPopup(avoidedPopup);
             }
+            setTimeout(()=> {
+                window.location.href = "https://boobalootoo.github.io/safetydance/home.html";
+            }, 3000)
+
         });
     </script>
 </body>
