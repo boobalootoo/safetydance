@@ -192,77 +192,70 @@
                         <div>Browser</div>
                     </a>
                 </div>
-                 <div class="app-icon" data-app="bank" data-password-required="true">
-                        <a href="bank.html">
-                            <img src="https://cdn-icons-png.flaticon.com/128/2830/2830284.png" alt="bank">
-                            <div>Bank</div>
-                        </a>
-                    </div>
-                    <div class="app-icon" data-app="tiktok" data-password-required="true">
-                        <a href="tiktok.html">
-                            <img src="https://cdn-icons-png.flaticon.com/128/3046/3046121.png" alt="tiktok">
-                            <div>TikTok</div>
-                        </a>
-                    </div>
-                    <div class="app-icon" data-app="youtube" data-password-required="true">
-                        <a href="youtube.html">
-                            <img src="https://cdn-icons-png.flaticon.com/128/174/174883.png" alt="youtube">
-                            <div>YouTube</div>
-                        </a>
-                    </div>
-                    <div class="app-icon" data-app="instagram" data-password-required="true">
-                        <a href="instagram.html">
-                            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="instagram">
-                            <div>Instagram</div>
-                        </a>
-                    </div>
-                    <div class="app-icon" data-app="snapchat" data-password-required="true">
-                        <a href="snapchat.html">
-                            <img src="https://cdn-icons-png.flaticon.com/128/15713/15713438.png" alt="snapchat">
+                <div class="app-icon" data-app="bank" data-password-required="true">
+                    <a href="bank.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/2830/2830284.png" alt="bank">
+                        <div>Bank</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="tiktok" data-password-required="true">
+                    <a href="tiktok.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3046/3046121.png" alt="tiktok">
+                        <div>TikTok</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="youtube" data-password-required="true">
+                    <a href="youtube.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/174/174883.png" alt="youtube">
+                        <div>YouTube</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="instagram" data-password-required="true">
+                    <a href="instagram.html">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="instagram">
+                        <div>Instagram</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="snapchat" data-password-required="true">
+                    <a href="snapchat.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/15713/15713438.png" alt="snapchat">
                         <div>Snapchat</div>
-                        </a>
-                    </div>
-                    <div class="app-icon" data-app="email" data-password-required="true">
-                        <a href="email.html">
-                            <img src="https://cdn-icons-png.flaticon.com/128/732/732200.png" alt="email">
-                            <div>Email</div>
-                        </a>
-                    </div>
-                    <div class="app-icon" data-app="temu">
-                        <a href="temu.html">
-                            <img src="https://cdn-icons-png.flaticon.com/128/3097/3097090.png" alt="temu">
-                            <div>Temu</div>
-                        </a>
-                    </div>
-                    <div class="app-icon" data-app="shein">
-                        <a href="shein.html">
-                            <img src="https://cdn-icons-png.flaticon.com/128/3097/3097084.png" alt="shein">
-                            <div>Shein</div>
-                        </a>
-                    </div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="email" data-password-required="true">
+                    <a href="email.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/732/732200.png" alt="email">
+                        <div>Email</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="temu">
+                    <a href="temu.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3097/3097090.png" alt="temu">
+                        <div>Temu</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="shein">
+                    <a href="shein.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3097/3097084.png" alt="shein">
+                        <div>Shein</div>
+                    </a>
+                </div>
             </div>
-             <div class="notification" id="initial-notification">
-                <div class="notification-sender">Post Office</div>
-                <div class="notification-title">Your parcel has been returned</div>
-                <p class="notification-text">To schedule your redelivery, please visit: <a href="https://po-support-depot.com">https://po-support-depot.com</a></p>
-            </div>
+             <div class="notification">
+                <div class="notification-sender">Post Office</div>
+                <div class="notification-title">Your parcel has been returned</div>
+                <p class="notification-text">To schedule your redelivery, please visit: <a href="https://po-support-depot.com">https://po-support-depot.com</a></p>
+            </div>
         </div>
     </div>
     <script>
         const appGrid = document.getElementById('app-grid');
-        let notificationShown = true;
-        const initialNotification = document.getElementById('initial-notification');
 
         appGrid.addEventListener('click', (event) => {
             let targetApp = event.target.closest('.app-icon');
             if (targetApp) {
                 const appName = targetApp.dataset.app;
                 window.location.href = `${appName}.html`; // Navigate to the app
-
-                if (appName === 'messages' && notificationShown) {
-                    initialNotification.remove();
-                    notificationShown = false;
-                }
             }
         });
     </script>
