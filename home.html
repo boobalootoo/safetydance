@@ -1,17 +1,18 @@
+html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Phone Home Screen</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light background for the whole body */
+            background-color: #f0f4f8;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,39 +21,39 @@
         }
         .phone-container {
             background-color: #fff;
-            border-radius: 26px; /* Rounded corners for the phone shape */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Stronger shadow for depth */
-            width: 375px; /* Standard phone width */
-            height: 812px; /* Standard phone height */
+            border-radius: 26px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 375px;
+            height: 812px;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Ensure content doesn't overflow rounded corners */
-            position: relative; /* Needed for absolute positioning of elements inside */
+            overflow: hidden;
+            position: relative;
         }
         #top-bar {
             display: flex;
-            justify-content: space-between; /* Push elements to the edges */
-            align-items: center; /* Vertically center items */
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
-            padding-top: 10px; /* Add padding at the top */
-            position: absolute; /* Position absolutely within the phone container */
+            padding-top: 10px;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
         }
         #top-bar div {
-            background-color: transparent; /* No background, so text is directly on phone background */
+            background-color: transparent;
             padding: 8px 12px;
-            border-radius: 12px; /* Keep the rounded corners */
+            border-radius: 12px;
             font-size: 0.8rem;
-            color: #222; /* Keep text color dark */
+            color: #222;
         }
         #app-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
-            margin-top: 80px; /* Push the app grid down below the top bar */
+            margin-top: 80px;
         }
         .app-icon {
             display: flex;
@@ -86,36 +87,68 @@
             </div>
             <div id="app-grid">
                 <div class="app-icon">
-                    <img src="https://via.placeholder.com/40" alt="Phone">
+                    <img src="https://via.placeholder.com/40" alt="phone">
                     <div>Phone</div>
                 </div>
                 <div class="app-icon">
-                    <img src="https://via.placeholder.com/40" alt="Messages">
+                    <img src="https://via.placeholder.com/40" alt="messages">
                     <div>Messages</div>
                 </div>
                 <div class="app-icon">
-                    <img src="https://via.placeholder.com/40" alt="Calendar">
+                    <img src="https://via.placeholder.com/40" alt="calendar">
                     <div>Calendar</div>
                 </div>
                 <div class="app-icon">
-                    <img src="https://via.placeholder.com/40" alt="Camera">
+                    <img src="https://via.placeholder.com/40" alt="camera">
                     <div>Camera</div>
                 </div>
                 <div class="app-icon">
-                    <img src="https://via.placeholder.com/40" alt="Photos">
+                    <img src="https://via.placeholder.com/40" alt="photos">
                     <div>Photos</div>
                 </div>
                 <div class="app-icon">
-                    <img src="https://via.placeholder.com/40" alt="Settings">
+                    <img src="https://via.placeholder.com/40" alt="settings">
                     <div>Settings</div>
                 </div>
-                 <div class="app-icon">
-                    <img src="https://via.placeholder.com/40" alt="Music">
+                <div class="app-icon">
+                    <img src="https://via.placeholder.com/40" alt="music">
                     <div>Music</div>
                 </div>
                 <div class="app-icon">
-                    <img src="https://via.placeholder.com/40" alt="Browser">
+                    <img src="https://via.placeholder.com/40" alt="browser">
                     <div>Browser</div>
+                </div>
+                <div class="app-icon">
+                    <img src="https://via.placeholder.com/40" alt="bank">
+                    <div>Bank</div>
+                </div>
+                <div class="app-icon">
+                    <img src="https://via.placeholder.com/40" alt="tiktok">
+                    <div>TikTok</div>
+                </div>
+                <div class="app-icon">
+                    <img src="https://via.placeholder.com/40" alt="youtube">
+                    <div>YouTube</div>
+                </div>
+                <div class="app-icon">
+                    <img src="https://via.placeholder.com/40" alt="instagram">
+                    <div>Instagram</div>
+                </div>
+                <div class="app-icon">
+                    <img src="https://via.placeholder.com/40" alt="snapchat">
+                    <div>Snapchat</div>
+                </div>
+                <div class="app-icon">
+                    <img src="https://via.placeholder.com/40" alt="email">
+                    <div>Email</div>
+                </div>
+                <div class="app-icon">
+                    <img src="https://via.placeholder.com/40" alt="temu">
+                    <div>Temu</div>
+                </div>
+                 <div class="app-icon">
+                    <img src="https://via.placeholder.com/40" alt="shein">
+                    <div>Shein</div>
                 </div>
             </div>
         </div>
