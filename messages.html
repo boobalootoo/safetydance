@@ -106,10 +106,90 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.2s ease;
+            transition: background-color 0.2s ease, transform 0.1s ease;
         }
         #new-message-button:hover {
             background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .popup h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #222;
+        }
+
+        .popup-form {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 15px;
+        }
+
+        .popup-form label {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+            text-align: left;
+        }
+
+        .popup-form input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .popup-form input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .popup-button {
+            padding: 12px 16px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            border: none;
+        }
+
+        .popup-button.submit {
+            background-color: #3b82f6;
+            color: #fff;
+        }
+
+        .popup-button.submit:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .popup-button.cancel {
+            background-color: #e0e0e0;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .popup-button.cancel:hover {
+            background-color: #d0d0d0;
             transform: translateY(-2px);
         }
     </style>
@@ -122,21 +202,53 @@
         </div>
         <div id="messages-header">Messages</div>
         <div id="messages-list">
-            <div class="message-item">
+            <div class="message-item" id="phishing-message">
                 <div class="sender">Post Office</div>
-                <div class="message-text">Your parcel has been returned to our depot due to a failed delivery attempt. To schedule your redelivery, please visit: <a href="https://po-support-depot.com">https://po-support-depot.com</a></div>
+                <div class="message-text">Your parcel has been returned to our depot due to a failed delivery attempt. To schedule your redelivery, please visit: <a href="#">https://po-support-depot.com</a></div>
                 <div class="message-date">Today, 10:20 AM</div>
             </div>
         </div>
         <button id="new-message-button">New Message</button>
     </div>
+
+    <div class="popup" id="phishing-popup">
+        <h2>Enter Details</h2>
+        <form class="popup-form" id="phishing-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required>
+            <button type="submit" class="popup-button submit" id="popup-submit">Submit</button>
+        </form>
+        <button class="popup-button cancel" id="cancel-button">Cancel</button>
+    </div>
+
     <script>
         const messagesList = document.getElementById('messages-list');
         const newMessageButton = document.getElementById('new-message-button');
+        const phishingMessage = document.getElementById('phishing-message');
+        const phishingPopup = document.getElementById('phishing-popup');
+        const phishingForm = document.getElementById('phishing-form');
+        const cancelButton = document.getElementById('cancel-button');
+        const submitButton = document.getElementById('popup-submit'); //added
+        const phishingLink = phishingMessage.querySelector('a');
 
         newMessageButton.addEventListener('click', () => {
-            //  Add functionality for creating a new message.
             alert('New message functionality coming soon!');
+        });
+
+        phishingLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            phishingPopup.style.display = 'block';
+        });
+
+        cancelButton.addEventListener('click', () => {
+            phishingPopup.style.display = 'none';
+        });
+
+        submitButton.addEventListener('click', (event) => { // added event listener for submit
+            event.preventDefault();
+            phishingPopup.style.display = 'none';
         });
     </script>
 </body>
