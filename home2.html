@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Phone Home Screen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .phone-container {
+            background-color: #fff;
+            border-radius: 26px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 375px;
+            height: 812px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        #top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-top: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 15;
+        }
+        #top-bar div {
+            background-color: transparent;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: #222;
+        }
+        #app-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 80px;
+        }
+        .app-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .app-icon:hover {
+            transform: translateY(-5px);
+        }
+        .app-icon img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 8px;
+        }
+        .app-icon a{
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .notification {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ffffff;
+            color: #1e293b;
+            padding: 8px 12px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0;
+            z-index: 20;
+            animation: slideInTop 0.5s ease-out, fadeOut 5s 2s ease-in forwards;
+            width: 100%;
+            max-width: 100%;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+        .notification-text {
+            font-size: 0.8rem;
+            color: #4b5563;
+        }
+        .notification-sender {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            margin-bottom: 2px;
+        }
+        @keyframes slideInTop {
+            from {
+                transform: translateX(-50%) translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="phone-container" id="phone-container">
+        <div id="home-screen">
+            <div id="top-bar">
+                <div>12:30 PM</div>
+                <div>Battery: 90%</div>
+            </div>
+            <div id="app-grid">
+                <div class="app-icon" data-app="phone">
+                    <a href="phone.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/126/126509.png" alt="phone">
+                        <div>Phone</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="messages">
+                    <a href="messages.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/4457/4457168.png" alt="messages">
+                        <div>Messages</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="calendar">
+                    <a href="calendar.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/10691/10691802.png" alt="calendar">
+                        <div>Calendar</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="camera">
+                    <a href="camera.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3617/3617277.png" alt="camera">
+                        <div>Camera</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="photos">
+                    <a href="photos.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/1375/1375106.png" alt="photos">
+                        <div>Photos</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="settings">
+                    <a href="settings.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/627/627495.png" alt="settings">
+                        <div>Settings</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="music">
+                    <a href="music.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/6707/6707113.png" alt="music">
+                        <div>Music</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="browser">
+                    <a href="browser.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/6125/6125000.png" alt="browser">
+                        <div>Browser</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="bank" data-password-required="true">
+                    <a href="bank.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/2830/2830284.png" alt="bank">
+                        <div>Bank</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="tiktok" data-password-required="true">
+                    <a href="tiktok.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3046/3046121.png" alt="tiktok">
+                        <div>TikTok</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="youtube" data-password-required="true">
+                    <a href="youtube.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/174/174883.png" alt="youtube">
+                        <div>YouTube</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="instagram" data-password-required="true">
+                    <a href="instagram.html">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="instagram">
+                        <div>Instagram</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="snapchat" data-password-required="true">
+                    <a href="snapchat.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/15713/15713438.png" alt="snapchat">
+                        <div>Snapchat</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="email" data-password-required="true">
+                    <a href="email.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/732/732200.png" alt="email">
+                        <div>Email</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="temu">
+                    <a href="temu.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3097/3097090.png" alt="temu">
+                        <div>Temu</div>
+                    </a>
+                </div>
+                <div class="app-icon" data-app="shein">
+                    <a href="shein.html">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3097/3097084.png" alt="shein">
+                        <div>Shein</div>
+                    </a>
+                </div>
+            </div>
+             //<div class="notification">
+                //<div class="notification-sender">Post Office</div>
+               // <div class="notification-title">Your parcel has been returned</div>
+               // <p class="notification-text">To schedule your redelivery, please visit: <a href="https://po-support-depot.com">https://po-support-depot.com</a></p>
+          //  </div>
+      //  </div>
+   // </div>
+    <script>
+        const appGrid = document.getElementById('app-grid');
+
+        appGrid.addEventListener('click', (event) => {
+            let targetApp = event.target.closest('.app-icon');
+            if (targetApp) {
+                const appName = targetApp.dataset.app;
+                window.location.href = `${appName}.html`; // Navigate to the app
+            }
+        });
+    </script>
+</body>
+</html>
