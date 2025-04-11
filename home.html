@@ -92,97 +92,97 @@
                 <div>Battery: 90%</div>
             </div>
             <div id="app-grid">
-                <div class="app-icon">
+                <div class="app-icon" data-app="phone">
                     <a href="phone.html">
                         <img src="https://via.placeholder.com/40" alt="phone">
                         <div>Phone</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="messages">
                     <a href="messages.html">
                         <img src="https://via.placeholder.com/40" alt="messages">
                         <div>Messages</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="calendar">
                     <a href="calendar.html">
                         <img src="https://via.placeholder.com/40" alt="calendar">
                         <div>Calendar</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="camera">
                     <a href="camera.html">
                         <img src="https://via.placeholder.com/40" alt="camera">
                         <div>Camera</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="photos">
                     <a href="photos.html">
                         <img src="https://via.placeholder.com/40" alt="photos">
                         <div>Photos</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="settings">
                     <a href="settings.html">
                         <img src="https://via.placeholder.com/40" alt="settings">
                         <div>Settings</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="music">
                     <a href="music.html">
                         <img src="https://via.placeholder.com/40" alt="music">
                         <div>Music</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="browser">
                     <a href="browser.html">
                         <img src="https://via.placeholder.com/40" alt="browser">
                         <div>Browser</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="bank" data-password-required="true">
                     <a href="bank.html">
                         <img src="https://via.placeholder.com/40" alt="bank">
                         <div>Bank</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="tiktok" data-password-required="true">
                     <a href="tiktok.html">
                         <img src="https://via.placeholder.com/40" alt="tiktok">
                         <div>TikTok</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="youtube" data-password-required="true">
                     <a href="youtube.html">
                         <img src="https://via.placeholder.com/40" alt="youtube">
                         <div>YouTube</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="instagram" data-password-required="true">
                     <a href="instagram.html">
                         <img src="https://via.placeholder.com/40" alt="instagram">
                         <div>Instagram</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="snapchat" data-password-required="true">
                     <a href="snapchat.html">
                         <img src="https://via.placeholder.com/40" alt="snapchat">
                         <div>Snapchat</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="email" data-password-required="true">
                     <a href="email.html">
                         <img src="https://via.placeholder.com/40" alt="email">
                         <div>Email</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="temu">
                     <a href="temu.html">
                         <img src="https://via.placeholder.com/40" alt="temu">
                         <div>Temu</div>
                     </a>
                 </div>
-                <div class="app-icon">
+                <div class="app-icon" data-app="shein">
                     <a href="shein.html">
                         <img src="https://via.placeholder.com/40" alt="shein">
                         <div>Shein</div>
@@ -191,5 +191,81 @@
             </div>
         </div>
     </div>
+    <script>
+        const appGrid = document.getElementById('app-grid');
+        const passwordMap = new Map();
+        let lockScreenPassword = null; // To store the lock screen password
+        const isPasswordEnabled = true; // You can use this to enable/disable password protection
+
+        function getRandomPassword() {
+            const passwordLength = Math.floor(Math.random() * 10) + 6;
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+={}[]|;:<>,.?/~';
+            let password = '';
+            for (let i = 0; i < passwordLength; i++) {
+                password += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return password;
+        }
+
+        // Function to handle password check
+        function checkPassword(appName, enteredPassword) {
+            if (appName === 'lockScreen') {
+                if (enteredPassword === lockScreenPassword) {
+                    return true; // Correct lock screen password
+                }
+                return false;
+            } else if (passwordMap.has(appName)) {
+                if (enteredPassword === passwordMap.get(appName)) {
+                    return true;
+                }
+                return false;
+            }
+            return true; //no password set
+        }
+
+        appGrid.addEventListener('click', (event) => {
+            let targetApp = event.target.closest('.app-icon');
+            if (targetApp) {
+                const appName = targetApp.dataset.app;
+                const passwordRequired = targetApp.dataset.passwordRequired === "true";
+
+                if (isPasswordEnabled && passwordRequired) {
+                    if (appName === 'lockScreen') {
+                        if (!lockScreenPassword) {
+                            lockScreenPassword = getRandomPassword();
+                            console.log(`Lock Screen Password: ${lockScreenPassword}`);
+                        }
+                        const enteredPassword = prompt(`Enter your Lock Screen password for ${appName}:`);
+                        if (enteredPassword !== null) {
+                            if (checkPassword(appName, enteredPassword)) {
+                                console.log(`Correct Lock Screen password for ${appName}`);
+                                passwordMap.set(appName, enteredPassword); // Store entered password
+                                window.location.href = `${appName}.html`; // Navigate to the app
+                            } else {
+                                alert('Incorrect Lock Screen password.  Try again.');
+                            }
+                        }
+
+                    }
+                    else {
+                        const enteredPassword = prompt(`Enter the password for ${appName}:`);
+                        if (enteredPassword !== null) {
+                            if (checkPassword(appName, enteredPassword)) {
+                                console.log(`Correct password for ${appName}`);
+                                passwordMap.set(appName, enteredPassword); // Store entered password
+                                window.location.href = `${appName}.html`; // Navigate to the app
+                            } else {
+                                alert('Incorrect password.  Try again.');
+                            }
+                        }
+                    }
+
+                } else {
+                    window.location.href = `${appName}.html`; // Navigate to the app
+                }
+
+            }
+        });
+    </script>
 </body>
 </html>
