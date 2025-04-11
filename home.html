@@ -195,7 +195,7 @@
         const appGrid = document.getElementById('app-grid');
         const passwordMap = new Map();
         let lockScreenPassword = null; // To store the lock screen password
-        const isPasswordEnabled = true; // You can use this to enable/disable password protection
+        const isPasswordEnabled = false; // You can use this to enable/disable password protection
 
         function getRandomPassword() {
             const passwordLength = Math.floor(Math.random() * 10) + 6;
@@ -229,40 +229,7 @@
                 const appName = targetApp.dataset.app;
                 const passwordRequired = targetApp.dataset.passwordRequired === "true";
 
-                if (isPasswordEnabled && passwordRequired) {
-                    if (appName === 'lockScreen') {
-                        if (!lockScreenPassword) {
-                            lockScreenPassword = getRandomPassword();
-                            console.log(`Lock Screen Password: ${lockScreenPassword}`);
-                        }
-                        const enteredPassword = prompt(`Enter your Lock Screen password for ${appName}:`);
-                        if (enteredPassword !== null) {
-                            if (checkPassword(appName, enteredPassword)) {
-                                console.log(`Correct Lock Screen password for ${appName}`);
-                                passwordMap.set(appName, enteredPassword); // Store entered password
-                                window.location.href = `${appName}.html`; // Navigate to the app
-                            } else {
-                                alert('Incorrect Lock Screen password.  Try again.');
-                            }
-                        }
-
-                    }
-                    else {
-                        const enteredPassword = prompt(`Enter the password for ${appName}:`);
-                        if (enteredPassword !== null) {
-                            if (checkPassword(appName, enteredPassword)) {
-                                console.log(`Correct password for ${appName}`);
-                                passwordMap.set(appName, enteredPassword); // Store entered password
-                                window.location.href = `${appName}.html`; // Navigate to the app
-                            } else {
-                                alert('Incorrect password.  Try again.');
-                            }
-                        }
-                    }
-
-                } else {
-                    window.location.href = `${appName}.html`; // Navigate to the app
-                }
+                window.location.href = `${appName}.html`; // Navigate to the app
 
             }
         });
