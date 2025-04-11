@@ -17,6 +17,8 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            overflow: hidden; /* To contain glitch effect */
+            position: relative;
         }
         .phone-container {
             background-color: #fff;
@@ -106,7 +108,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease;
+            transition: background-color 0.2s ease, transform 0.2s ease;
         }
         #new-message-button:hover {
             background-color: #2563eb;
@@ -123,7 +125,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            z-index: 100;
+            z-index: 110; /* Higher than glitch */
             width: 90%;
             max-width: 400px;
             text-align: center;
@@ -192,6 +194,63 @@
             background-color: #d0d0d0;
             transform: translateY(-2px);
         }
+
+        #home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 32px;
+            height: 32px;
+            background-image: url('https://cdn-icons-png.flaticon.com/128/263/263115.png');
+            background-size: cover;
+            cursor: pointer;
+            z-index: 20; /* Ensure it's above other elements */
+        }
+
+        .glitch {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            opacity: 0;
+            z-index: 100;
+            pointer-events: none; /* Allow clicks to pass through */
+        }
+
+        .glitch.active {
+            opacity: 1;
+            animation: glitch 0.5s steps(2, end) infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(5px, -5px); }
+            60% { transform: translate(-3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+
+        .warning-popup, .positive-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 120; /* Above glitch and main popup */
+            width: 80%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        .warning-popup h2 { color: #dc2626; }
+        .positive-popup h2 { color: #16a34a; }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -211,6 +270,8 @@
         <button id="new-message-button">New Message</button>
     </div>
 
+    <div id="home-button"></div>
+
     <div class="popup" id="phishing-popup">
         <h2>Enter Details</h2>
         <form class="popup-form" id="phishing-form">
@@ -223,6 +284,46 @@
         <button class="popup-button cancel" id="cancel-button">Cancel</button>
     </div>
 
+    <div class="glitch" id="glitch-effect"></div>
+
+    <div class="warning-popup" id="submitted-warning">
+        <h2>Warning!</h2>
+        <p>Submitting this information could allow scammers to:</p>
+        <ul>
+            <li>Access your accounts.</li>
+            <li>Steal your identity.</li>
+            <li>Commit fraud.</li>
+        </ul>
+        <button class="popup-button cancel" id="close-submitted-warning">Close</button>
+    </div>
+
+    <div class="warning-popup" id="clicked-warning">
+        <h2>Be Careful!</h2>
+        <p>Even clicking on a suspicious link can:</p>
+        <ul>
+            <li>Install malware on your device.</li>
+            <li>Confirm your email/phone is active, leading to more scams.</li>
+        </ul>
+        <p>If you think you've done this:</p>
+        <ul>
+            <li>Run a virus scan.</li>
+            <li>Be extra cautious of future messages.</li>
+        </ul>
+        <button class="popup-button cancel" id="close-clicked-warning">Close</button>
+    </div>
+
+    <div class="positive-popup" id="avoided-popup">
+        <h2>Good Job!</h2>
+        <p>Avoiding suspicious links is the right thing to do!</p>
+        <p>Tips for the future:</p>
+        <ul>
+            <li>Verify sender authenticity through official channels.</li>
+            <li>Never share personal information via unsolicited messages.</li>
+            <li>Be wary of urgent requests.</li>
+        </ul>
+        <button class="popup-button cancel" id="close-avoided-popup">Close</button>
+    </div>
+
     <script>
         const messagesList = document.getElementById('messages-list');
         const newMessageButton = document.getElementById('new-message-button');
@@ -230,8 +331,34 @@
         const phishingPopup = document.getElementById('phishing-popup');
         const phishingForm = document.getElementById('phishing-form');
         const cancelButton = document.getElementById('cancel-button');
-        const submitButton = document.getElementById('popup-submit'); //added
+        const submitButton = document.getElementById('popup-submit');
+        const homeButton = document.getElementById('home-button');
+        const glitchEffect = document.getElementById('glitch-effect');
+        const submittedWarningPopup = document.getElementById('submitted-warning');
+        const clickedWarningPopup = document.getElementById('clicked-warning');
+        const avoidedPopup = document.getElementById('avoided-popup');
+        const closeSubmittedWarningButton = document.getElementById('close-submitted-warning');
+        const closeClickedWarningButton = document.getElementById('close-clicked-warning');
+        const closeAvoidedPopup = document.getElementById('close-avoided-popup');
         const phishingLink = phishingMessage.querySelector('a');
+
+        let linkClicked = false;
+        let detailsSubmitted = false;
+
+        function triggerGlitch() {
+            glitchEffect.classList.add('active');
+            setTimeout(() => {
+                glitchEffect.classList.remove('active');
+            }, 500); // Adjust duration as needed
+        }
+
+        function showPopup(element) {
+            element.style.display = 'block';
+        }
+
+        function hidePopup(element) {
+            element.style.display = 'none';
+        }
 
         newMessageButton.addEventListener('click', () => {
             alert('New message functionality coming soon!');
@@ -239,16 +366,47 @@
 
         phishingLink.addEventListener('click', (event) => {
             event.preventDefault();
-            phishingPopup.style.display = 'block';
+            linkClicked = true;
+            showPopup(phishingPopup);
         });
 
         cancelButton.addEventListener('click', () => {
-            phishingPopup.style.display = 'none';
+            hidePopup(phishingPopup);
         });
 
-        submitButton.addEventListener('click', (event) => { // added event listener for submit
+        submitButton.addEventListener('click', (event) => {
             event.preventDefault();
-            phishingPopup.style.display = 'none';
+            detailsSubmitted = true;
+            hidePopup(phishingPopup);
+            triggerGlitch();
+            showPopup(submittedWarningPopup);
+        });
+
+        closeSubmittedWarningButton.addEventListener('click', () => {
+            hidePopup(submittedWarningPopup);
+        });
+
+        closeClickedWarningButton.addEventListener('click', () => {
+            hidePopup(clickedWarningPopup);
+        });
+
+        closeAvoidedPopup.addEventListener('click', () => {
+            hidePopup(avoidedPopup);
+        });
+
+        homeButton.addEventListener('click', () => {
+            if (detailsSubmitted) {
+                triggerGlitch();
+                showPopup(clickedWarningPopup);
+                detailsSubmitted = false; // Reset for future interactions
+                linkClicked = false;
+            } else if (linkClicked) {
+                triggerGlitch();
+                showPopup(clickedWarningPopup);
+                linkClicked = false;
+            } else {
+                showPopup(avoidedPopup);
+            }
         });
     </script>
 </body>
